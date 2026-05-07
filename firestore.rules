@@ -1,0 +1,66 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidUser(data) {
+      return data.uid == request.auth.uid &&
+             data.email is string && data.email.size() <= 256 &&
+             data.name is string && data.name.size() <= 100 &&
+             data.balance is number &&
+             data.keys().hasAll(['uid', 'email', 'name', 'balance']) &&
+             data.keys().size() <= 6;
+    }
+
+    function isValidTransaction(data) {
+      return data.userId == request.auth.uid &&
+             data.amount is number &&
+             data.category in ['Food', 'Transport', 'Shopping', 'Entertainment', 'Bills', 'Income', 'Other'] &&
+             data.method in ['Cash', 'Card', 'Online Payment'] &&
+             data.date is string && 
+             (data.get('notes', '') is string && data.get('notes', '').size() <= 500) &&
+             data.keys().hasAll(['userId', 'amount', 'category', 'method', 'date']) &&
+             data.keys().size() <= 7;
+    }
+
+    match /users/{userId} {
+      allow get: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidUser(incoming());
+      allow update: if isOwner(userId) && isValidUser(incoming()) && 
+                    incoming().diff(existing()).affectedKeys().hasOnly(['name', 'balance', 'monthlyBudget']);
+    }
+
+    match /transactions/{transactionId} {
+      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow get: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn() && incoming().userId == request.auth.uid && isValidTransaction(incoming());
+      allow update: if isSignedIn() && existing().userId == request.auth.uid && 
+                    incoming().userId == request.auth.uid && isValidTransaction(incoming()) &&
+                    incoming().diff(existing()).affectedKeys().hasOnly(['category', 'notes', 'amount', 'date', 'method']);
+      allow delete: if isSignedIn() && existing().userId == request.auth.uid;
+    }
+  }
+}
