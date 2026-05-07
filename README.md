@@ -45,7 +45,7 @@ FlowState is built using a modern, scalable tech stack:
 ## 📱 App Flow
 
 <div align="center">
-  <img src="app_flow.png" alt="App flow" width="200"/>
+  <img src="app_flow.png" alt="App flow" width="max"/>
 </div>
 
 ---
