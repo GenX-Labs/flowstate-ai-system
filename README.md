@@ -1,20 +1,69 @@
+# FlowState
+
+> "Track smarter. Spend wiser" — Managing money, simplified for students.
+
+FlowState is an AI-powered financial tracking assistant designed specifically to help students build better financial habits. This project was built for the **Build With AI Hackathon 2026** by team **Techy Nerds**.
+
+---
+
+## ⚠️ The Problem
+
+Students often struggle with managing their finances due to:
+* Overspending without realizing it.
+* Poor budgeting habits and no clear understanding of spending patterns.
+* Complex financial apps that are not student-friendly and lack personalized guidance.
+
+Poor financial habits can lead to unnecessary debt, lack of savings, and severe financial stress.
+
+---
+
+## 💡 Our Solution
+
+Our goal is to make financial tracking simple and provide AI-powered financial guidance to help users build better habits.
+
+### Key Features
+* **Expense Tracking & Payment Recording:** Easily log your daily expenses.
+* **Spending Analytics:** Get a clear overview of where your money goes.
+* **AI Financial Assistant:** Powered by the Gemini API, our chatbot acts as a personal financial advisor.
+* **Smart Spending Insights:** The AI analyzes spending habits, detects overspending categories, and suggests actionable budgeting strategies.
+
+---
+
+## 🛠️ System Architecture & Tech Stack
+
+FlowState is built using a modern, scalable tech stack:
+
+* **Frontend:** Flutter
+* **Backend & Database:** Firebase Backend, Firebase Database, and Cloud Functions
+* **Authentication:** Firebase Authentication
+* **AI Integration:** Gemini API
+
+**Data Flow:** `Flutter App` ➔ `Firebase Backend` ➔ `Firebase Database` ➔ `Gemini API`
+
+---
+
+## 📱 App Flow
+
 <div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+  <img src="app_flow.png" alt="App flow" width="200"/>
 </div>
 
-# Run and deploy your AI Studio app
+---
 
-This contains everything you need to run your app locally.
+## 🚀 Future Enhancements
 
-View your app in AI Studio: https://ai.studio/apps/5de5a3f0-2b93-4947-a8a1-3153f507b413
+We plan to expand FlowState with the following features:
+* Real payment gateway integration
+* Open banking API support
+* Smart budget prediction
+* Receipt scanning with AI
+* Spending anomaly detection
+* Multi-language support
 
-## Run Locally
+---
 
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## 👨‍💻 Team: Techy Nerds
+* Rugen
+* Ruben
+* Linga
+* Harrish
